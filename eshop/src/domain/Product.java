@@ -10,15 +10,24 @@ package domain;
  * @author lixi3350
  */
 public class Product {
-    private Integer ProductID;
+    private Integer productID;
     private String productName;
     private String description;
     private String category;
     private double price;
-    private Integer quantityInStock;
+    private Integer quantity;
 
-    public void setProductID(Integer ProductID) {
-        this.ProductID = ProductID;
+    public Product(Integer productID, String productName, String description, String category, double price, Integer quantity) {
+        this.productID = productID;
+        this.productName = productName;
+        this.description = description;
+        this.category = category;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
+    public void setProductID(Integer productID) {
+        this.productID = productID;
     }
 
     public void setProductName(String productName) {
@@ -37,12 +46,12 @@ public class Product {
         this.price = price;
     }
 
-    public void setQuantityInStock(Integer quantityInStock) {
-        this.quantityInStock = quantityInStock;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 
     public Integer getProductID() {
-        return ProductID;
+        return productID;
     }
 
     public String getProductName() {
@@ -61,13 +70,13 @@ public class Product {
         return price;
     }
 
-    public Integer getQuantityInStock() {
-        return quantityInStock;
+    public Integer getQuantity() {
+        return quantity;
     }
 
     @Override
     public String toString() {
-        return "Product{" + "ProductID=" + ProductID + ", productName=" + productName + '}';
+        return "Product{" + "ProductID=" + productID + ", productName=" + productName + '}';
     }
     
     

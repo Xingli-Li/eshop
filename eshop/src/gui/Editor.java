@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 package gui;
-
+import domain.Product;
 /**
  *
  * @author lixi3350
  */
 public class Editor extends javax.swing.JDialog {
-
+ private Product products = new Product();
     /**
      * Creates new form Editor
      */
@@ -182,6 +182,7 @@ public class Editor extends javax.swing.JDialog {
     }//GEN-LAST:event_txtQuantityActionPerformed
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
+    /* LAB02 test successful for print out each variable
     Integer productID = Integer.parseInt(txtID.getText());
     String productName = txtName.getText();
     String description = txtDescription.getText();
@@ -189,8 +190,20 @@ public class Editor extends javax.swing.JDialog {
     Double price = Double.parseDouble(txtPrice.getText());
     Integer quantity = Integer.parseInt(txtQuantity.getText());
     
+    System.out.println(productID+","+productName+","+description+","+category+","+price+","+quantity);
+    */
     
-      System.out.println(productID+","+productName+","+description+","+category+","+price+","+quantity);// TODO add your handling code here:
+    //LAB02 Test pass put the data from the variables into the product
+    products.setProductID(Integer.parseInt(txtID.getText()));
+    products.setProductName((String) txtName.getText());
+    products.setDescription(txtDescription.getText());
+    products.setCategory(cmbCategory.getSelectedItem().toString());
+    products.setPrice(Double.parseDouble(txtPrice.getText()));
+    products.setQuantity(Integer.parseInt(txtQuantity.getText()));
+
+    System.out.println(products);
+
+// TODO add your handling code here:
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     /**

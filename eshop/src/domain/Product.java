@@ -26,6 +26,8 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public Product() {}
+
     public void setProductID(Integer productID) {
         this.productID = productID;
     }

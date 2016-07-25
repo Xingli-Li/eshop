@@ -1,3 +1,6 @@
+
+import gui.Menu;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -14,7 +17,13 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Menu frame = new Menu(); 
+        // centre the frame on the screen
+        frame.setLocationRelativeTo(null);
+        // show the frame
+        frame.setVisible(true);
+
+// TODO code application logic here
     }
     
 }

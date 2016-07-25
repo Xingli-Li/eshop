@@ -29,17 +29,9 @@ public class Order {
         this.date = date;
     }
     
-    public double getTotal(){
-        double total=0;
-
-        for (OrderItem item : purchasedItem) {
-            total += item.getItemTotal();
-        }
-        System.out.print(total);
-        return total;
-        
-        }
-    
-    public addItem(orderItem){}
+    //LAB02?????what's the meaning for getTotal() & addItem()?????
+    public double getTotal(){}
+       
+    public void addItem(){}
     
 }

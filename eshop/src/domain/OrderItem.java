@@ -30,9 +30,7 @@ public class OrderItem {
     }
     
     public double getItemTotal(){
-        Integer itemTotal=0;
-        itemTotal += purchasedItem * purchasedPrice;
-    System.out.print(itemTotal);
+       return purchasedPrice*purchasedItem;
     }
     
 }

@@ -102,7 +102,12 @@ dialog.setVisible(true);
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jButtonViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewActionPerformed
-        
+// create the dialog instance
+Report view = new Report(this, true);
+// centre the dialog on the parent window
+view.setLocationRelativeTo(this);
+// make the dialog visible
+view.setVisible(true);       
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jButtonViewActionPerformed

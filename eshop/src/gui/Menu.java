@@ -92,7 +92,7 @@ public class Menu extends javax.swing.JFrame {
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
 // create the dialog instance
-Editor dialog = new Editor(this, false);
+Editor dialog = new Editor(this, true);
 // centre the dialog on the parent window
 dialog.setLocationRelativeTo(this);
 // make the dialog visible

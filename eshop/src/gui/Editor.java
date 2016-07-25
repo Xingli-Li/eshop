@@ -4,13 +4,16 @@
  * and open the template in the editor.
  */
 package gui;
+import dao.ProductStore;
 import domain.Product;
 /**
  *
  * @author lixi3350
  */
 public class Editor extends javax.swing.JDialog {
- private Product products = new Product();
+ private Product product = new Product();
+ private ProductStore dao = new ProductStore();
+ 
     /**
      * Creates new form Editor
      */
@@ -193,13 +196,14 @@ public class Editor extends javax.swing.JDialog {
     */
     
     //LAB02 Test pass put the data from the variables into the product
-    products.setProductID(Integer.parseInt(txtID.getText()));
-    products.setProductName((String) txtName.getText());
-    products.setDescription(txtDescription.getText());
-    products.setCategory(cmbCategory.getSelectedItem().toString());
-    products.setPrice(Double.parseDouble(txtPrice.getText()));
-    products.setQuantity(Integer.parseInt(txtQuantity.getText()));
-    System.out.println(products);
+    product.setProductID(Integer.parseInt(txtID.getText()));
+    product.setProductName((String) txtName.getText());
+    product.setDescription(txtDescription.getText());
+    product.setCategory(cmbCategory.getSelectedItem().toString());
+    product.setPrice(Double.parseDouble(txtPrice.getText()));
+    product.setQuantity(Integer.parseInt(txtQuantity.getText()));
+    System.out.println(product);
+    dao.save(product);
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSaveActionPerformed

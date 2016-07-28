@@ -15,7 +15,8 @@ import java.util.Collection;
  */
 public class ProductStore {
     private static ArrayList<Product> allProducts = new ArrayList();
-    private static ArrayList<String> allCategories = new ArrayList();
+    private static Collection<String> allCategories = new ArrayList();
+    
     
     //LAB03 take single product and add it to the arrayList
     public void save(Product product){
@@ -25,17 +26,17 @@ public class ProductStore {
     
     
     //LAB03 return the new field in the new getProduct method
-    public ArrayList<Product> getProduct(){
-    return allProducts;
+    public ArrayList<Product> getProducts() {
+        return allProducts;
     }
-    
-    public ArrayList<String> getCategory(){
-    return allCategories;
+
+    public Collection<String> getCategories() {
+        return allCategories;
     }
-    
-    //Project page5 find product by search ID
+ 
+    //Project page5: find product by search ID ????????ERROR:can only find id once 
     public Product findById(int id) { 
-        if (ProductStore.allProducts.isEmpty()) {
+        if (allProducts.isEmpty()) {
             return null;
         }
         for (int i = 0; i < allProducts.size(); i++) {
@@ -48,9 +49,9 @@ public class ProductStore {
         return null;
     }
     
-    //Project page5: user selects a category, then only the products in that category should be displayed
-    public ArrayList<String> findAllFilter(String selectedCategory) {
-       return allCategories;  
+    //Project page5: ??????????ERROR cannot find output product
+    public Collection<String> findByFilter(String category) {
+        return allCategories.get(category); 
     }
 
     

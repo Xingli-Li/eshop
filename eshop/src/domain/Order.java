@@ -35,31 +35,31 @@ public class Order {
     public Order(Integer orderID, Integer date) {
         this.orderID = orderID;
         this.date = date;
-        items = new ArrayList<>();
+        //items = new ArrayList<>();
     }
   
     //LAB02 get the price for all the items
     public double getTotal(){
     double total=0;
-    
     for (OrderItem item : items){
         total += item.getItemTotal();
     }
     System.out.println(total);
     return total;
     }
-    
-
-       
-    //LAB02 count all the items  ??????ERROR??????
-    public Integer addItem(OrderItem orderItem){
-        Integer row = null;
+      
+    //LAB02 count all the items
+    public void addItem(OrderItem orderItem){
+        items.add(orderItem);
+        
+        /*Integer row = null;
         for(OrderItem item : items){
             row +=item.getPurchasedItem();
             row++;
         }
         System.out.println(row);
         return row;
+        */
     }
 
 }

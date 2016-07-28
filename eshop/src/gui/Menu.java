@@ -28,32 +28,34 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabelTietle = new javax.swing.JLabel();
-        jButtonAdd = new javax.swing.JButton();
-        jButtonView = new javax.swing.JButton();
-        jButtonExit = new javax.swing.JButton();
+        Add = new javax.swing.JButton();
+        View = new javax.swing.JButton();
+        Exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jLabelTietle.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabelTietle.setForeground(new java.awt.Color(102, 102, 102));
         jLabelTietle.setText("Product    Administration");
 
-        jButtonAdd.setText("Add a New Product");
-        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+        Add.setText("Add a New Product");
+        Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddActionPerformed(evt);
+                AddActionPerformed(evt);
             }
         });
 
-        jButtonView.setText("View Products");
-        jButtonView.addActionListener(new java.awt.event.ActionListener() {
+        View.setText("View Products");
+        View.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonViewActionPerformed(evt);
+                ViewActionPerformed(evt);
             }
         });
 
-        jButtonExit.setText("Exit");
-        jButtonExit.addActionListener(new java.awt.event.ActionListener() {
+        Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExitActionPerformed(evt);
+                ExitActionPerformed(evt);
             }
         });
 
@@ -62,16 +64,16 @@ public class Menu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(75, 75, 75)
+                .addGap(54, 54, 54)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(Exit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(View, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(58, 58, 58))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(152, 152, 152)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(95, 95, 95)
                 .addComponent(jLabelTietle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(138, 138, 138))
+                .addGap(106, 106, 106))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -79,18 +81,18 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(jLabelTietle, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                .addComponent(Add, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonView, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addComponent(View, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jButtonExit, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                .addComponent(Exit, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                 .addGap(41, 41, 41))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+    private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
 // create the dialog instance
 Editor dialog = new Editor(this, true);
 
@@ -99,9 +101,9 @@ dialog.setLocationRelativeTo(this);
 dialog.setVisible(true);
 
 // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAddActionPerformed
+    }//GEN-LAST:event_AddActionPerformed
 
-    private void jButtonViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonViewActionPerformed
+    private void ViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewActionPerformed
 // create the dialog instance
 Report view = new Report(this, true);
 
@@ -110,13 +112,13 @@ view.setLocationRelativeTo(this);
 view.setVisible(true);       
 
 // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonViewActionPerformed
+    }//GEN-LAST:event_ViewActionPerformed
 
-    private void jButtonExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitActionPerformed
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
         System.exit(0);
 
 // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonExitActionPerformed
+    }//GEN-LAST:event_ExitActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,9 +156,9 @@ view.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAdd;
-    private javax.swing.JButton jButtonExit;
-    private javax.swing.JButton jButtonView;
+    private javax.swing.JButton Add;
+    private javax.swing.JButton Exit;
+    private javax.swing.JButton View;
     private javax.swing.JLabel jLabelTietle;
     // End of variables declaration//GEN-END:variables
 }

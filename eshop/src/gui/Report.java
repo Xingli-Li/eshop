@@ -6,7 +6,6 @@
 package gui;
 
 import dao.ProductStore;
-import domain.Product;
 import gui.helpers.SimpleListModel;
 
 
@@ -20,24 +19,23 @@ public class Report extends javax.swing.JDialog {
      */
     
     SimpleListModel myProduct = new SimpleListModel();
-    SimpleListModel myFilter = new SimpleListModel();
-    
+    SimpleListModel myFilter = new SimpleListModel(); 
     private ProductStore dao = new ProductStore();
-    protected void updateItem() {}
+    //protected void updateItem() {}
     
     public Report(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
         //use SimpleListModel to get the dao data into the JList
-        myProduct.updateItems(dao.getProduct());
+        myProduct.updateItems(dao.getProducts());
         jListProduct.setModel(myProduct);
         
         //use SimpleListModel to get dao data into category
-        myFilter.updateItems(dao.getCategory());
+        myFilter.updateItems(dao.getCategories());
         cmbFilter.setModel(myFilter);
-        
-        
+        myFilter.insertElementAt("All", 0);
+        cmbFilter.setSelectedIndex(0);
+         
     }
 
     /**
@@ -91,6 +89,8 @@ public class Report extends javax.swing.JDialog {
             }
         });
 
+        jLabelTitle.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jLabelTitle.setForeground(new java.awt.Color(102, 102, 102));
         jLabelTitle.setText("View Products");
 
         jLabelSearch.setText("Search by ID:");
@@ -116,34 +116,33 @@ public class Report extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
+                        .addComponent(Edit, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                        .addGap(50, 50, 50)
+                        .addComponent(Delete, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                        .addGap(51, 51, 51)
+                        .addComponent(Close, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                            .addComponent(jLabelSearch, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabelFilter, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Edit, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                .addGap(50, 50, 50)
-                                .addComponent(Delete, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                .addGap(51, 51, 51)
-                                .addComponent(Close, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelSearch, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabelFilter, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addComponent(txtSearchID)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtSearchID)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(cmbFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(4, 4, 4))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(167, 167, 167)
-                        .addComponent(jLabelTitle)))
+                                .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cmbFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(4, 4, 4)))))
                 .addGap(20, 20, 20))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(135, 135, 135)
+                .addComponent(jLabelTitle)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,7 +162,7 @@ public class Report extends javax.swing.JDialog {
                     .addComponent(jLabelFilter)
                     .addComponent(cmbFilter, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
                 .addGap(24, 24, 24)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Close, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -185,14 +184,19 @@ public class Report extends javax.swing.JDialog {
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-   String idStr = (String) txtSearchID.getText();
+        String idStr = txtSearchID.getText();
+        myProduct.updateItems(dao.findById(Integer.parseInt(idStr)));
+        
+        /*String idStr = (String) txtSearchID.getText();
         // do nothing if no ID is entered
         if (idStr.isEmpty()) {
             return;
         }
         Integer id = Integer.parseInt(idStr);
         Product findID = dao.findById(id);
-        myProduct.updateItems(findID);     
+        myProduct.updateItems(findID);    
+        */
+        
 // TODO add your handling code here:
     }//GEN-LAST:event_SearchActionPerformed
 
@@ -201,8 +205,15 @@ public class Report extends javax.swing.JDialog {
     }//GEN-LAST:event_EditActionPerformed
 
     private void cmbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFilterActionPerformed
-        String selectedCategory = cmbFilter.getSelectedItem().toString();
-        myFilter.updateItems(dao.findAllFilter(selectedCategory));
+        //if no product found return all (add "All" Selection)
+        if (cmbFilter.getSelectedIndex()==0) {
+            myFilter.updateItems(dao.getProducts());
+         } else {
+             myFilter.updateItems(dao.findByFilter(String.valueOf(cmbFilter.getSelectedItem())));   
+         }
+        
+        //String selectedCategory = cmbFilter.getSelectedItem().toString();
+        //myFilter.updateItems(dao.findByFilter(selectedCategory));
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbFilterActionPerformed
 

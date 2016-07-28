@@ -6,6 +6,7 @@
 package gui;
 import dao.ProductStore;
 import domain.Product;
+import gui.helpers.SimpleListModel;
 /**
  *
  * @author lixi3350
@@ -13,6 +14,7 @@ import domain.Product;
 public class Editor extends javax.swing.JDialog {
  private Product product = new Product();
  private ProductStore dao = new ProductStore();
+ SimpleListModel myCategory = new SimpleListModel();
  
     /**
      * Creates new form Editor
@@ -21,6 +23,11 @@ public class Editor extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         cmbCategory.setEditable(true);
+        
+        //LAB03 use SimpleListModel to get the dao data into the combo-box
+        myCategory.updateItems(dao.getCategory());
+        cmbCategory.setModel(myCategory);
+        
     }
 
     /**

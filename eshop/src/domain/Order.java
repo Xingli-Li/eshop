@@ -5,6 +5,8 @@
  */
 package domain;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author lixi3350
@@ -12,6 +14,7 @@ package domain;
 public class Order {
     private Integer orderID;
     private Integer date;
+    ArrayList<OrderItem> items = new ArrayList<>();
 
     public Integer getOrderID() {
         return orderID;
@@ -28,10 +31,35 @@ public class Order {
     public void setDate(Integer date) {
         this.date = date;
     }
+
+    public Order(Integer orderID, Integer date) {
+        this.orderID = orderID;
+        this.date = date;
+        items = new ArrayList<>();
+    }
+  
+    //LAB02 get the price for all the items
+    public double getTotal(){
+    double total=0;
     
-    //LAB02?????what's the meaning for getTotal() & addItem()?????
-    public double getTotal(){}
+    for (OrderItem item : items){
+        total += item.getItemTotal();
+    }
+    System.out.println(total);
+    return total;
+    }
+    
+
        
-    public void addItem(){}
-    
+    //LAB02 count all the items  ??????ERROR??????
+    public Integer addItem(OrderItem orderItem){
+        Integer row = null;
+        for(OrderItem item : items){
+            row +=item.getPurchasedItem();
+            row++;
+        }
+        System.out.println(row);
+        return row;
+    }
+
 }

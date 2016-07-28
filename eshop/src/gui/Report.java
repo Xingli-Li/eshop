@@ -6,7 +6,9 @@
 package gui;
 
 import dao.ProductStore;
+import domain.Product;
 import gui.helpers.SimpleListModel;
+
 
 /**
  *
@@ -17,16 +19,23 @@ public class Report extends javax.swing.JDialog {
      * Creates new form Report
      */
     
-    SimpleListModel myModel = new SimpleListModel();
-    private ProductStore dao = new ProductStore();
+    SimpleListModel myProduct = new SimpleListModel();
+    SimpleListModel myFilter = new SimpleListModel();
     
+    private ProductStore dao = new ProductStore();
+    protected void updateItem() {}
     
     public Report(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
-        myModel.updateItems(dao.getProduct());
-        jListProduct.setModel(myModel);
+        //use SimpleListModel to get the dao data into the JList
+        myProduct.updateItems(dao.getProduct());
+        jListProduct.setModel(myProduct);
+        
+        //use SimpleListModel to get dao data into category
+        myFilter.updateItems(dao.getCategory());
+        cmbFilter.setModel(myFilter);
         
         
     }
@@ -42,10 +51,15 @@ public class Report extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jListProduct = new javax.swing.JList<>();
-        jButtonClose = new javax.swing.JButton();
-        jButtonDelete = new javax.swing.JButton();
-        JButtonEdit = new javax.swing.JButton();
+        Close = new javax.swing.JButton();
+        Delete = new javax.swing.JButton();
+        Edit = new javax.swing.JButton();
         jLabelTitle = new javax.swing.JLabel();
+        jLabelSearch = new javax.swing.JLabel();
+        jLabelFilter = new javax.swing.JLabel();
+        txtSearchID = new javax.swing.JTextField();
+        cmbFilter = new javax.swing.JComboBox<>();
+        Search = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -56,23 +70,46 @@ public class Report extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(jListProduct);
 
-        jButtonClose.setText("Close");
-        jButtonClose.addActionListener(new java.awt.event.ActionListener() {
+        Close.setText("Close");
+        Close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCloseActionPerformed(evt);
+                CloseActionPerformed(evt);
             }
         });
 
-        jButtonDelete.setText("Delete");
-        jButtonDelete.addActionListener(new java.awt.event.ActionListener() {
+        Delete.setText("Delete");
+        Delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDeleteActionPerformed(evt);
+                DeleteActionPerformed(evt);
             }
         });
 
-        JButtonEdit.setText("Edit");
+        Edit.setText("Edit");
+        Edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditActionPerformed(evt);
+            }
+        });
 
         jLabelTitle.setText("View Products");
+
+        jLabelSearch.setText("Search by ID:");
+
+        jLabelFilter.setText("Category Filter:");
+
+        cmbFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFilterActionPerformed(evt);
+            }
+        });
+
+        Search.setText("Search");
+        Search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,46 +118,93 @@ public class Report extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(154, 154, 154)
-                        .addComponent(jLabelTitle))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(JButtonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44)
-                                .addComponent(jButtonClose, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(20, Short.MAX_VALUE))
+                                .addComponent(Edit, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                .addGap(50, 50, 50)
+                                .addComponent(Delete, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                .addGap(51, 51, 51)
+                                .addComponent(Close, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelSearch, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabelFilter, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtSearchID)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(cmbFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(4, 4, 4))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(167, 167, 167)
+                        .addComponent(jLabelTitle)))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelTitle)
-                .addGap(93, 93, 93)
-                .addComponent(jScrollPane1)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(txtSearchID, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabelSearch)
+                        .addComponent(Search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonClose)
-                    .addComponent(jButtonDelete)
-                    .addComponent(JButtonEdit))
+                    .addComponent(jLabelFilter)
+                    .addComponent(cmbFilter, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Close, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
+    private void CloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CloseActionPerformed
     dispose();
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonCloseActionPerformed
+    }//GEN-LAST:event_CloseActionPerformed
 
-    private void jButtonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDeleteActionPerformed
+    private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonDeleteActionPerformed
+    }//GEN-LAST:event_DeleteActionPerformed
+
+    private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
+   String idStr = (String) txtSearchID.getText();
+        // do nothing if no ID is entered
+        if (idStr.isEmpty()) {
+            return;
+        }
+        Integer id = Integer.parseInt(idStr);
+        Product findID = dao.findById(id);
+        myProduct.updateItems(findID);     
+// TODO add your handling code here:
+    }//GEN-LAST:event_SearchActionPerformed
+
+    private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EditActionPerformed
+
+    private void cmbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFilterActionPerformed
+        String selectedCategory = cmbFilter.getSelectedItem().toString();
+        myFilter.updateItems(dao.findAllFilter(selectedCategory));
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbFilterActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,11 +249,16 @@ public class Report extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JButtonEdit;
-    private javax.swing.JButton jButtonClose;
-    private javax.swing.JButton jButtonDelete;
+    private javax.swing.JButton Close;
+    private javax.swing.JButton Delete;
+    private javax.swing.JButton Edit;
+    private javax.swing.JButton Search;
+    private javax.swing.JComboBox<String> cmbFilter;
+    private javax.swing.JLabel jLabelFilter;
+    private javax.swing.JLabel jLabelSearch;
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JList<String> jListProduct;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtSearchID;
     // End of variables declaration//GEN-END:variables
 }

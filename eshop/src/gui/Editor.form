@@ -47,9 +47,9 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonSave" max="32767" attributes="0"/>
+                      <Component id="Save" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                      <Component id="jButtonCancel" max="32767" attributes="0"/>
+                      <Component id="Cancel" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -69,39 +69,39 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jLabelID" min="-2" max="-2" attributes="0"/>
-                  <Component id="txtID" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
+                  <Component id="txtID" alignment="1" pref="25" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtName" alignment="3" pref="25" max="32767" attributes="0"/>
                   <Component id="jLabelName" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="91" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="91" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabelCategory" min="-2" max="-2" attributes="0"/>
-                          <Component id="cmbCategory" min="-2" pref="27" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtPrice" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelPrice" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbCategory" pref="25" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtQuantity" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="jLabelQuantity" alignment="3" min="-2" pref="14" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jLabelPrice" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtPrice" alignment="1" pref="25" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelQuantity" min="-2" pref="14" max="-2" attributes="0"/>
+                          <Component id="txtQuantity" pref="25" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jLabelDescription" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButtonCancel" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                  <Component id="jButtonSave" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="Cancel" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="Save" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -150,18 +150,21 @@
         <Property name="text" type="java.lang.String" value="Quantity in Stock:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonSave">
+    <Component class="javax.swing.JButton" name="Save">
       <Properties>
         <Property name="text" type="java.lang.String" value="Save"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSaveActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SaveActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonCancel">
+    <Component class="javax.swing.JButton" name="Cancel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancel"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CancelActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtID">
       <Events>

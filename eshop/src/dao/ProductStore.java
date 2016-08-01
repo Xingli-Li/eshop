@@ -6,32 +6,40 @@
 package dao;
 
 import domain.Product;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.TreeSet;
 
 /**
  *
  * @author lixi3350
  */
-public class ProductStore {
-    private static ArrayList<Product> allProducts = new ArrayList();
-    private static Collection<String> allCategories = new ArrayList();
+public class ProductStore implements ProductDAOInterface{
+    private static HashMap<Integer, Product> allProducts = new HashMap();
+    private static HashMap<String, Collection<Product>> allCategories = new HashMap();
     
     
-    //LAB03 take single product and add it to the arrayList
+    //LAB04
     public void save(Product product){
-    allProducts.add(product);
-    allCategories.add(product.getCategory());
+    allProducts.put(product.getProductID(), product);
+        if (allCategories.containsKey(product.getCategory())) {
+            allCategories.get(product.getCategory()).add(product);
+        } else {
+            Collection<Product> addProduct = new TreeSet<>();
+            addProduct.add(product);
+            allCategories.put(product.getCategory(), addProduct);
+        }   
+    //allCategories.add(product.getCategory());
     }
     
     
     //LAB03 return the new field in the new getProduct method
-    public ArrayList<Product> getProducts() {
-        return allProducts;
+    public Collection<Product> getProducts() {
+        return allProducts.values();
     }
 
     public Collection<String> getCategories() {
-        return allCategories;
+        return allCategories.keySet();
     }
  
     //Project page5: find product by search ID ????????ERROR:can only find id once 
@@ -49,9 +57,17 @@ public class ProductStore {
         return null;
     }
     
-    //Project page5: ??????????ERROR cannot find output product
-    public Collection<String> findByFilter(String category) {
+    //Project page5
+    public Collection<Product> findByFilter(String category) {
         return allCategories.get(category); 
+    }
+    
+    public void delete (Product product){
+    allProducts.remove(product.getProductID());
+         //if (allCategories.containsKey(product.getCategory())) {
+            //allCategories.get(product.getCategory()).remove(product.getProductID());
+         //}
+    
     }
 
     

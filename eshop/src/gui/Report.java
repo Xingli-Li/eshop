@@ -25,6 +25,7 @@ public class Report extends javax.swing.JDialog {
     private ProductStore dao = new ProductStore();
     private JList<Product> jListProduct = new JList<>();
     //protected void updateItem() {}
+    private Product selectedProduct;
     
     public Report(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -177,7 +178,11 @@ public class Report extends javax.swing.JDialog {
     }//GEN-LAST:event_CloseActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        // TODO add your handling code here:
+        selectedProduct = (Product) ProductStore.getSelectedValue();
+        dao.delete(selectedProduct);
+        myProduct.updateItems(dao.getProducts());
+
+// TODO add your handling code here:
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed

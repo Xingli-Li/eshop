@@ -9,7 +9,7 @@ package domain;
  *
  * @author lixi3350
  */
-public class Product {
+public class Product implements  Comparable<Product>{
     private Integer productID;
     private String productName;
     private String description;
@@ -81,7 +81,13 @@ public class Product {
         return "Product{" + "ID:" + productID + ", Name:" + productName+ "}";//+ ", description=" + description + ", category=" + category + ", price=" + price + ", quantity=" + quantity + '}';
     }
 
+    //LAB04 tell sorted collections how to sort the objects
+    @Override
+    public int compareTo(Product o) { 
+        Integer myID = this.getProductID();
+        Integer thierID = o.productID;
+        return myID.compareTo(thierID);
+    }
     
-    
-    
+
 }

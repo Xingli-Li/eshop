@@ -6,7 +6,9 @@
 package gui;
 
 import dao.ProductStore;
+import domain.Product;
 import gui.helpers.SimpleListModel;
+import javax.swing.JList;
 
 
 /**
@@ -21,11 +23,14 @@ public class Report extends javax.swing.JDialog {
     SimpleListModel myProduct = new SimpleListModel();
     SimpleListModel myFilter = new SimpleListModel(); 
     private ProductStore dao = new ProductStore();
+    private JList<Product> jListProduct = new JList<>();
     //protected void updateItem() {}
     
     public Report(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        jScrollPane1.setViewportView(jListProduct);
+        
         //use SimpleListModel to get the dao data into the JList
         myProduct.updateItems(dao.getProducts());
         jListProduct.setModel(myProduct);
@@ -48,7 +53,6 @@ public class Report extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jListProduct = new javax.swing.JList<>();
         Close = new javax.swing.JButton();
         Delete = new javax.swing.JButton();
         Edit = new javax.swing.JButton();
@@ -60,13 +64,6 @@ public class Report extends javax.swing.JDialog {
         Search = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jListProduct.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jListProduct);
 
         Close.setText("Close");
         Close.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +115,6 @@ public class Report extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(Edit, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                         .addGap(50, 50, 50)
@@ -137,7 +133,8 @@ public class Report extends javax.swing.JDialog {
                                 .addComponent(Search, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(cmbFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(4, 4, 4)))))
+                                .addGap(4, 4, 4))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(20, 20, 20))
             .addGroup(layout.createSequentialGroup()
                 .addGap(135, 135, 135)
@@ -268,7 +265,6 @@ public class Report extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelFilter;
     private javax.swing.JLabel jLabelSearch;
     private javax.swing.JLabel jLabelTitle;
-    private javax.swing.JList<String> jListProduct;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtSearchID;
     // End of variables declaration//GEN-END:variables

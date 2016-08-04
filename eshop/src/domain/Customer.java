@@ -14,6 +14,7 @@ public class Customer {
     private String name;
     private Integer creditcard;
     private Integer password;
+    //private Order order;
 
     public void setUserName(String userName) {
         this.userName = userName;

@@ -14,36 +14,44 @@ import java.util.TreeSet;
  *
  * @author lixi3350
  */
-public class ProductStore implements ProductDAOInterface{
+public class ProductStore implements ProductDAOInterface {
+
     private static HashMap<Integer, Product> allProducts = new HashMap();
     private static HashMap<String, Collection<Product>> allCategories = new HashMap();
-    
-    
+
     //LAB04
-    public void save(Product product){
-    allProducts.put(product.getProductID(), product);
+    @Override
+    public void save(Product product) {
+
+        allProducts.put(product.getProductID(), product);
+
         if (allCategories.containsKey(product.getCategory())) {
             allCategories.get(product.getCategory()).add(product);
         } else {
             Collection<Product> addProduct = new TreeSet<>();
             addProduct.add(product);
             allCategories.put(product.getCategory(), addProduct);
-        }   
-    //allCategories.add(product.getCategory());
+        }
+        //allCategories.add(product.getCategory());
     }
-    
-    
+
     //LAB03 return the new field in the new getProduct method
+    @Override
     public Collection<Product> getProducts() {
         return allProducts.values();
     }
 
+    @Override
     public Collection<String> getCategories() {
         return allCategories.keySet();
     }
- 
-    //Project page5: find product by search ID ????????ERROR:can only find id once 
-    public Product findById(int id) { 
+
+    //Project page5 Test Pass
+    @Override
+    public Product findById(int id) {
+        return allProducts.get(id);
+        
+        /*
         if (allProducts.isEmpty()) {
             return null;
         }
@@ -55,20 +63,19 @@ public class ProductStore implements ProductDAOInterface{
             }
         }
         return null;
-    }
-    
-    //Project page5
-    public Collection<Product> findByFilter(String category) {
-        return allCategories.get(category); 
-    }
-    
-    public void delete (Product product){
-    allProducts.remove(product.getProductID());
-         //if (allCategories.containsKey(product.getCategory())) {
-            //allCategories.get(product.getCategory()).remove(product.getProductID());
-         //}
-    
+*/
     }
 
-    
+    //Project page5 Doesn't work at for second time
+    @Override
+    public Collection<Product> findByFilter(String category) {
+        return allCategories.get(category);
+    }
+
+    @Override
+    public void delete(Product selected) {
+        allProducts.remove(selected.getProductID());
+
+    }
+
 }

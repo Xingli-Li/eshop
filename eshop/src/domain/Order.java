@@ -6,6 +6,7 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  *
@@ -14,7 +15,24 @@ import java.util.ArrayList;
 public class Order {
     private Integer orderID;
     private Integer date;
-    ArrayList<OrderItem> items = new ArrayList<>();
+    Collection<OrderItem> items = new ArrayList<>();
+    private Customer customer;
+
+     public void setOrderID(Integer orderID) {
+        this.orderID = orderID;
+    }
+
+    public void setDate(Integer date) {
+        this.date = date;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public void setItems(Collection<OrderItem> items) {
+        this.items = items;
+    }
 
     public Integer getOrderID() {
         return orderID;
@@ -24,18 +42,19 @@ public class Order {
         return date;
     }
 
-    public void setOrderID(Integer orderID) {
-        this.orderID = orderID;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setDate(Integer date) {
-        this.date = date;
+    public Collection<OrderItem> getItems() {
+        return items;
     }
-
-    public Order(Integer orderID, Integer date) {
+    
+    public Order(Integer orderID, Integer date, Customer customer) {
         this.orderID = orderID;
         this.date = date;
-        //items = new ArrayList<>();
+        this.customer = customer;
+        items = new ArrayList<>();
     }
   
     //LAB02 get the price for all the items
@@ -51,15 +70,6 @@ public class Order {
     //LAB02 count all the items
     public void addItem(OrderItem orderItem){
         items.add(orderItem);
-        
-        /*Integer row = null;
-        for(OrderItem item : items){
-            row +=item.getPurchasedItem();
-            row++;
-        }
-        System.out.println(row);
-        return row;
-        */
     }
 
 }

@@ -10,27 +10,28 @@ package domain;
  * @author lixi3350
  */
 public class OrderItem {
-    private Integer purchasedItem;
+    private Integer quantity;
     private double purchasedPrice;
+    private Product product;
 
-    public Integer getPurchasedItem() {
-        return purchasedItem;
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public double getPurchasedPrice() {
         return purchasedPrice;
     }
 
-    public void setPurchasedItem(Integer purchasedItem) {
-        this.purchasedItem = purchasedItem;
+    public void setQuantity(Integer quantity) {
+        this.quantity = product.getQuantity();
     }
 
     public void setPurchasedPrice(double purchasedPrice) {
-        this.purchasedPrice = purchasedPrice;
+        this.purchasedPrice = product.getPrice();
     }
     
     public double getItemTotal(){
-       return purchasedPrice*purchasedItem;
+       return purchasedPrice*quantity;
     }
     
 }

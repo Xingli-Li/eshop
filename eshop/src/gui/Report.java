@@ -9,6 +9,7 @@ import dao.ProductStore;
 import domain.Product;
 import gui.helpers.SimpleListModel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -25,7 +26,6 @@ public class Report extends javax.swing.JDialog {
     private ProductStore dao = new ProductStore();
     private JList<Product> jListProduct = new JList<>();
     //protected void updateItem() {}
-    private Product selectedProduct;
     
     public Report(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -178,27 +178,36 @@ public class Report extends javax.swing.JDialog {
     }//GEN-LAST:event_CloseActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        selectedProduct = (Product) ProductStore.getSelectedValue();
-        dao.delete(selectedProduct);
-        myProduct.updateItems(dao.getProducts());
-
+        //LAB05 delete the selected product!!!!!! test pass  !!!!!!!
+        Product selected = (Product)jListProduct.getSelectedValue(); 
+        
+        //do nothing if user clicks delete without selecting a product
+        if (jListProduct.isSelectionEmpty()){
+            System.out.println("Please select a product!");
+            return ;
+        }
+        
+        //add conforimation dialog
+        JOptionPane.showMessageDialog(this, "Are you sure to delete this item?", "Confirmation", JOptionPane.INFORMATION_MESSAGE);          
+        int result = JOptionPane.showConfirmDialog(this, "Product is deleted successfully");       
+        //did  the user click the yes button?
+        if (result == JOptionPane.YES_OPTION) {
+           dao.getProducts().remove(selected);
+       //user clicked yes so perform the action
+        }
+        
+       myProduct.updateItems(dao.getProducts()); 
 // TODO add your handling code here:
     }//GEN-LAST:event_DeleteActionPerformed
 
     private void SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchActionPerformed
-        String idStr = txtSearchID.getText();
-        myProduct.updateItems(dao.findById(Integer.parseInt(idStr)));
-        
-        /*String idStr = (String) txtSearchID.getText();
-        // do nothing if no ID is entered
+        String idStr = txtSearchID.getText();  
+        //do nothing if no ID is entered
         if (idStr.isEmpty()) {
             return;
-        }
-        Integer id = Integer.parseInt(idStr);
-        Product findID = dao.findById(id);
-        myProduct.updateItems(findID);    
-        */
-        
+        } 
+        myProduct.updateItems(dao.findById(Integer.parseInt(idStr)));
+    
 // TODO add your handling code here:
     }//GEN-LAST:event_SearchActionPerformed
 
@@ -212,10 +221,10 @@ public class Report extends javax.swing.JDialog {
             myFilter.updateItems(dao.getProducts());
          } else {
              myFilter.updateItems(dao.findByFilter(String.valueOf(cmbFilter.getSelectedItem())));   
+              //String selectedCategory = cmbFilter.getSelectedItem().toString();
+             //myFilter.updateItems(dao.findByFilter(selectedCategory));
          }
-        
-        //String selectedCategory = cmbFilter.getSelectedItem().toString();
-        //myFilter.updateItems(dao.findByFilter(selectedCategory));
+
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbFilterActionPerformed
 

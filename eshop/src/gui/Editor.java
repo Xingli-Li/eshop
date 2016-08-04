@@ -19,8 +19,9 @@ public class Editor extends javax.swing.JDialog {
     /**
      * Creates new form Editor
      */
-    public Editor(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public Editor(java.awt.Window parent, boolean modal) {
+        super(parent);
+        setModal(modal);
         initComponents();
         cmbCategory.setEditable(true);
         
@@ -30,8 +31,17 @@ public class Editor extends javax.swing.JDialog {
         
     }
     
-    public Editor(Product product){
-    
+    public Editor(java.awt.Window parent, boolean modal, Product productToEdit){
+        this(parent, modal);
+        this.product=productToEdit;
+        
+    txtID.setText(txtID.getText().toString());
+    txtID.setEditable(false);
+    txtName.setText(txtName.getText());
+    txtDescription.setText(txtDescription.getText());
+    cmbCategory.setSelectedItem(cmbCategory.getSelectedItem().toString());
+    txtPrice.setText( txtPrice.getText());
+    txtQuantity.setText(txtQuantity.getText());
     }
 
     /**

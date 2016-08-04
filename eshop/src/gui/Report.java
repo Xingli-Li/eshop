@@ -212,7 +212,15 @@ public class Report extends javax.swing.JDialog {
     }//GEN-LAST:event_SearchActionPerformed
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
-        // TODO add your handling code here:
+        Product selected = (Product)jListProduct.getSelectedValue();     
+        if (jListProduct.getSelectedValue() != null) { 
+                Editor editProduct = new Editor(this, true);
+                editProduct.setLocationRelativeTo(this);
+                editProduct.setVisible(true);
+                myProduct.updateItems(dao.getProducts());
+                //myProduct.updateItems(dao.findById(selected.getProductID()));
+        }
+// TODO add your handling code here:
     }//GEN-LAST:event_EditActionPerformed
 
     private void cmbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFilterActionPerformed

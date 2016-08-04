@@ -51,8 +51,7 @@ public class ProductStore implements ProductDAOInterface {
     public Product findById(int id) {
         return allProducts.get(id);
         
-        /*
-        if (allProducts.isEmpty()) {
+        /*if (allProducts.isEmpty()) {
             return null;
         }
         for (int i = 0; i < allProducts.size(); i++) {
@@ -62,8 +61,7 @@ public class ProductStore implements ProductDAOInterface {
                 return null;
             }
         }
-        return null;
-*/
+        return null;*/
     }
 
     //Project page5 Doesn't work at for second time

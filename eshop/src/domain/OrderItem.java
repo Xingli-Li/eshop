@@ -11,14 +11,14 @@ package domain;
  */
 public class OrderItem {
     private Integer quantity;
-    private double purchasedPrice;
+    private Integer purchasedPrice;
     private Product product;
 
     public Integer getQuantity() {
         return quantity;
     }
 
-    public double getPurchasedPrice() {
+    public Integer getPurchasedPrice() {
         return purchasedPrice;
     }
 
@@ -26,7 +26,7 @@ public class OrderItem {
         this.quantity = product.getQuantity();
     }
 
-    public void setPurchasedPrice(double purchasedPrice) {
+    public void setPurchasedPrice(Integer purchasedPrice) {
         this.purchasedPrice = product.getPrice();
     }
     

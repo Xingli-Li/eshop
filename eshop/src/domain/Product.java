@@ -14,10 +14,10 @@ public class Product implements  Comparable<Product>{
     private String productName;
     private String description;
     private String category;
-    private double price;
+    private Integer price;
     private Integer quantity;
 
-    public Product(Integer productID, String productName, String description, String category, double price, Integer quantity) {
+    public Product(Integer productID, String productName, String description, String category, Integer price, Integer quantity) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -44,7 +44,7 @@ public class Product implements  Comparable<Product>{
         this.category = category;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -68,7 +68,7 @@ public class Product implements  Comparable<Product>{
         return category;
     }
 
-    public double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 

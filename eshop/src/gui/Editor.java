@@ -33,15 +33,15 @@ public class Editor extends javax.swing.JDialog {
     
     public Editor(java.awt.Window parent, boolean modal, Product productToEdit){
         this(parent, modal);
-        this.product=productToEdit;
+        this.product = productToEdit;
         
-    txtID.setText(txtID.getText().toString());
+    txtID.setText(productToEdit.getProductID().toString());
     txtID.setEditable(false);
-    txtName.setText(txtName.getText());
-    txtDescription.setText(txtDescription.getText());
-    cmbCategory.setSelectedItem(cmbCategory.getSelectedItem().toString());
-    txtPrice.setText( txtPrice.getText());
-    txtQuantity.setText(txtQuantity.getText());
+    txtName.setText(productToEdit.getProductName());
+    txtDescription.setText(productToEdit.getDescription());
+    cmbCategory.setSelectedItem(productToEdit.getCategory());
+    txtPrice.setText(productToEdit.getPrice().toString());
+    txtQuantity.setText(productToEdit.getQuantity().toString());
     }
 
     /**
@@ -216,7 +216,7 @@ public class Editor extends javax.swing.JDialog {
     product.setProductName(txtName.getText());
     product.setDescription(txtDescription.getText());
     product.setCategory(cmbCategory.getSelectedItem().toString());
-    product.setPrice(Double.parseDouble((String) txtPrice.getText()));
+    product.setPrice(Integer.parseInt((String) txtPrice.getText()));
     product.setQuantity(Integer.parseInt(txtQuantity.getText()));
     System.out.println(product);
     dao.save(product);

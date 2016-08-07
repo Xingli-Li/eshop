@@ -212,14 +212,19 @@ public class Report extends javax.swing.JDialog {
     }//GEN-LAST:event_SearchActionPerformed
 
     private void EditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditActionPerformed
-        Product selected = (Product)jListProduct.getSelectedValue();     
-        if (jListProduct.getSelectedValue() != null) { 
-                Editor editProduct = new Editor(this, true);
+          
+        //LAB04: Editor can only apprear with empty dialog, no product shows
+        if (jListProduct.isSelectionEmpty()) { 
+            return;
+        }
+        
+        Product selected = (Product)jListProduct.getSelectedValue();
+                Editor editProduct = new Editor(this, true, selected);
                 editProduct.setLocationRelativeTo(this);
                 editProduct.setVisible(true);
                 myProduct.updateItems(dao.getProducts());
                 //myProduct.updateItems(dao.findById(selected.getProductID()));
-        }
+        
 // TODO add your handling code here:
     }//GEN-LAST:event_EditActionPerformed
 

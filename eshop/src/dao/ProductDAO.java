@@ -12,7 +12,7 @@ import java.util.Collection;
  *
  * @author lixi3350
  */
-public interface ProductDAOInterface {
+public interface ProductDAO {
     Collection<Product> getProducts();
     Collection<String> getCategories();
  

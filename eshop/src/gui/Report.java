@@ -8,6 +8,7 @@ package gui;
 import dao.ProductStore;
 import domain.Product;
 import gui.helpers.SimpleListModel;
+import java.util.Collection;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
@@ -188,7 +189,7 @@ public class Report extends javax.swing.JDialog {
         }
         
         //add conforimation dialog
-        JOptionPane.showMessageDialog(this, "Are you sure to delete this item?", "Confirmation", JOptionPane.INFORMATION_MESSAGE);          
+        JOptionPane.showMessageDialog(this, "Are you sure you want to delete this product?", "Confirmation", JOptionPane.INFORMATION_MESSAGE);          
         int result = JOptionPane.showConfirmDialog(this, "Product is deleted successfully");       
         //did  the user click the yes button?
         if (result == JOptionPane.YES_OPTION) {
@@ -207,7 +208,7 @@ public class Report extends javax.swing.JDialog {
             return;
         } 
         myProduct.updateItems(dao.findById(Integer.parseInt(idStr)));
-    
+   
 // TODO add your handling code here:
     }//GEN-LAST:event_SearchActionPerformed
 
@@ -229,7 +230,7 @@ public class Report extends javax.swing.JDialog {
     }//GEN-LAST:event_EditActionPerformed
 
     private void cmbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFilterActionPerformed
-        //if no product found return all (add "All" Selection)
+//if no product found return all (add "All" Selection)
         if (cmbFilter.getSelectedIndex()==0) {
             myFilter.updateItems(dao.getProducts());
          } else {
@@ -237,7 +238,8 @@ public class Report extends javax.swing.JDialog {
               //String selectedCategory = cmbFilter.getSelectedItem().toString();
              //myFilter.updateItems(dao.findByFilter(selectedCategory));
          }
-
+        
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbFilterActionPerformed
 

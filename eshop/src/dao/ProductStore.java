@@ -14,7 +14,7 @@ import java.util.TreeSet;
  *
  * @author lixi3350
  */
-public class ProductStore implements ProductDAOInterface {
+public class ProductStore implements ProductDAO {
 
     private static HashMap<Integer, Product> allProducts = new HashMap();
     private static HashMap<String, Collection<Product>> allCategories = new HashMap();

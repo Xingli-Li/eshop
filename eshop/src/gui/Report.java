@@ -224,17 +224,17 @@ public class Report extends javax.swing.JDialog {
                 editProduct.setLocationRelativeTo(this);
                 editProduct.setVisible(true);
                 myProduct.updateItems(dao.getProducts());
-                //myProduct.updateItems(dao.findById(selected.getProductID()));
         
 // TODO add your handling code here:
     }//GEN-LAST:event_EditActionPerformed
 
     private void cmbFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFilterActionPerformed
 //if no product found return all (add "All" Selection)
-        if (cmbFilter.getSelectedIndex()==0) {
-            myFilter.updateItems(dao.getProducts());
+        if (cmbFilter.getSelectedIndex()== 0) {
+            myProduct.updateItems(dao.getProducts());
+            jListProduct.setModel(myProduct);
          } else {
-             myFilter.updateItems(dao.findByFilter(String.valueOf(cmbFilter.getSelectedItem())));   
+             myProduct.updateItems(dao.findByFilter((cmbFilter.getSelectedItem().toString())));   
               //String selectedCategory = cmbFilter.getSelectedItem().toString();
              //myFilter.updateItems(dao.findByFilter(selectedCategory));
          }

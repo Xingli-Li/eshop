@@ -1,4 +1,6 @@
 
+import dao.ProductDAO;
+import dao.ProductJdbcDAO;
 import gui.Menu;
 
 /*
@@ -13,11 +15,16 @@ import gui.Menu;
  */
 public class Main {
 
+    private static ProductDAO dao = new ProductJdbcDAO();
+    
+    
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Menu frame = new Menu(); 
+        
+        
+        Menu frame = new Menu(dao); 
         // centre the frame on the screen
         frame.setLocationRelativeTo(null);
         // show the frame
@@ -27,3 +34,4 @@ public class Main {
     }
     
 }
+    

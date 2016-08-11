@@ -120,17 +120,102 @@ public class ProductJdbcDAO implements ProductDAO{
 
     @Override
     public void delete(Product selected) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+         String sql = "delete from product where id = ?";
+
+	try (
+		Connection dbConn = JdbcConnection.getConnection(url);
+		PreparedStatement stmt = dbConn.prepareStatement(sql);
+	) {
+
+		stmt.setInt(1, selected.getId());
+		stmt.executeUpdate();
+
+	} catch (SQLException ex) {
+		throw new RuntimeException(ex.getMessage(), ex);
+	}
+}
+    //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
 
     @Override
     public Product findById(int productID) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+        String sql = "select * from product where id = ?";
+
+	try (
+		Connection connection = JdbcConnection.getConnection(url);
+		PreparedStatement stmt = connection.prepareStatement(sql);
+		) {
+
+		stmt.setInt(1, productID);
+		ResultSet rs = stmt.executeQuery();
+
+		if (rs.next()) {
+		Integer id = rs.getInt("id");
+		String name = rs.getString("name");
+		String description = rs.getString("description");
+                String category = rs.getString("category");
+                Integer price = rs.getInt("price");
+                Integer quantity = rs.getInt("quantity");
+
+		return new Product(id, name, description, category, price, quantity);
+
+		} else {
+		// no student matches given ID so return null
+		return null;
+		}
+	} catch (SQLException ex) {
+		throw new RuntimeException(ex.getMessage(), ex);
+	}
+}
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
     
     @Override
     public Collection<Product> findByFilter(String category) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            String sql = "select * from product where category = ? order by id";
+
+		try (
+                    // get a connection to the database
+                    Connection dbCon = JdbcConnection.getConnection(url);
+                    // create the statement
+                    PreparedStatement stmt = dbCon.prepareStatement(sql);
+		) {
+
+			// provide value for major parameter
+			stmt.setString(1, category);
+
+			// execute the query
+			ResultSet rs = stmt.executeQuery();
+
+			// Create a collection for holding the student we get from the query.
+			// We are using a List in order to preserve the order in which
+			// the data was returned from the query.
+			List<Product> products = new ArrayList<>();
+
+			// iterate through the query results
+			while (rs.next()) {
+
+				// get the data out of the query
+				Integer id = rs.getInt("id");
+				String name = rs.getString("name");
+                                String description = rs.getString("description");
+                                String cat = rs.getString("category");
+                                Integer price = rs.getInt("price");
+                                Integer quantity = rs.getInt("quantity");
+
+				// use the data to create a student object
+				Product p = new Product(id, name, description, cat, price, quantity);
+
+				// and put it in the collection
+				products.add(p);
+			}
+               
+			return products;
+
+		} catch (SQLException ex) {
+			throw new RuntimeException(ex.getMessage(), ex);
+		}    
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
      
 }

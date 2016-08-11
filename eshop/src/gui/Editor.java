@@ -4,26 +4,30 @@
  * and open the template in the editor.
  */
 package gui;
-import dao.ProductStore;
+
+import dao.ProductDAO;
 import domain.Product;
 import gui.helpers.SimpleListModel;
+import javax.swing.JOptionPane;
 /**
  *
  * @author lixi3350
  */
 public class Editor extends javax.swing.JDialog {
  private Product product = new Product();
- private ProductStore dao = new ProductStore();
+ //private ProductStore dao = new ProductStore();
+ private static ProductDAO dao;
  SimpleListModel myCategory = new SimpleListModel();
  
     /**
      * Creates new form Editor
      */
-    public Editor(java.awt.Window parent, boolean modal) {
+    public Editor(java.awt.Window parent, boolean modal, ProductDAO dao) {
         super(parent);
-        setModal(modal);
+        super.setModal(modal);
         initComponents();
         cmbCategory.setEditable(true);
+        Editor.dao = dao;
         
         //LAB03 use SimpleListModel to get the dao data into the combo-box
         myCategory.updateItems(dao.getCategories());
@@ -31,13 +35,13 @@ public class Editor extends javax.swing.JDialog {
         
     }
     
-    public Editor(java.awt.Window parent, boolean modal, Product productToEdit){
-        this(parent, modal);
+    public Editor(java.awt.Window parent, boolean modal, Product productToEdit, ProductDAO dao){
+        this(parent, modal, dao);
         this.product = productToEdit;
         
-    txtID.setText(productToEdit.getProductID().toString());
+    txtID.setText(productToEdit.getId().toString());
     txtID.setEditable(false);
-    txtName.setText(productToEdit.getProductName());
+    txtName.setText(productToEdit.getName());
     txtDescription.setText(productToEdit.getDescription());
     cmbCategory.setSelectedItem(productToEdit.getCategory());
     txtPrice.setText(productToEdit.getPrice().toString());
@@ -71,6 +75,7 @@ public class Editor extends javax.swing.JDialog {
         cmbCategory = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(204, 204, 255));
 
         jLabelTitle.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
         jLabelTitle.setForeground(new java.awt.Color(102, 102, 102));
@@ -211,9 +216,17 @@ public class Editor extends javax.swing.JDialog {
     System.out.println(productID+","+productName+","+description+","+category+","+price+","+quantity);
     */
     
+    // LAB05: Fixing a potential data-loss bug
+        if (txtID.isEnabled() && dao.findById(new Integer(txtID.getText())) != null ) {
+            
+            JOptionPane.showMessageDialog(this, "This ID already exists, please change a new one", "Warning", JOptionPane.INFORMATION_MESSAGE); 
+ 
+            return;
+    }
+        
     //LAB02 Test pass put the data from the variables into the product
-    product.setProductID(Integer.parseInt(txtID.getText()));
-    product.setProductName(txtName.getText());
+    product.setId(Integer.parseInt(txtID.getText()));
+    product.setName(txtName.getText());
     product.setDescription(txtDescription.getText());
     product.setCategory(cmbCategory.getSelectedItem().toString());
     product.setPrice(Integer.parseInt((String) txtPrice.getText()));
@@ -268,11 +281,11 @@ public class Editor extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(Editor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+       
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Editor dialog = new Editor(new javax.swing.JFrame(), true);
+                Editor dialog = new Editor(new javax.swing.JFrame(), true, dao);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

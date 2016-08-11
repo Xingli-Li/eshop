@@ -96,7 +96,7 @@ public class ProductJdbcDAO implements ProductDAO{
     @Override
     public void save(Product product) {
         
-         String sql = "merge into product(id,name,description,category,price,quantity)values(?,?,?,?,?,?)";
+         String sql = "merge into product(id, name, description, category, price, quantity)values(?, ?, ?, ?, ?, ?)";
          try (
         // get connection to database
         Connection dbCon = JdbcConnection.getConnection(url);

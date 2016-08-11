@@ -10,16 +10,16 @@ package domain;
  * @author lixi3350
  */
 public class Product implements  Comparable<Product>{
-    private Integer productID;
-    private String productName;
+    private Integer id;
+    private String name;
     private String description;
     private String category;
     private Integer price;
     private Integer quantity;
 
     public Product(Integer productID, String productName, String description, String category, Integer price, Integer quantity) {
-        this.productID = productID;
-        this.productName = productName;
+        this.id = productID;
+        this.name = productName;
         this.description = description;
         this.category = category;
         this.price = price;
@@ -28,12 +28,12 @@ public class Product implements  Comparable<Product>{
 
     public Product() {}
 
-    public void setProductID(Integer productID) {
-        this.productID = productID;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setDescription(String description) {
@@ -52,12 +52,12 @@ public class Product implements  Comparable<Product>{
         this.quantity = quantity;
     }
 
-    public Integer getProductID() {
-        return productID;
+    public Integer getId() {
+        return id;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
     public String getDescription() {
@@ -78,14 +78,14 @@ public class Product implements  Comparable<Product>{
 
     @Override
     public String toString() {
-        return "Product{" + "ID:" + productID + ", Name:" + productName+ "}";//+ ", description=" + description + ", category=" + category + ", price=" + price + ", quantity=" + quantity + '}';
+        return "Product{" + "ID:" + id + ", Name:" + name+ "}";//+ ", description=" + description + ", category=" + category + ", price=" + price + ", quantity=" + quantity + '}';
     }
 
     //LAB04 tell sorted collections how to sort the objects
     @Override
     public int compareTo(Product o) { 
-        Integer myID = this.getProductID();
-        Integer thierID = o.productID;
+        Integer myID = this.getId();
+        Integer thierID = o.id;
         return myID.compareTo(thierID);
     }
     

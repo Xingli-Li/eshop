@@ -19,7 +19,7 @@ import java.util.List;
  * @author lixi3350
  */
 public class ProductJdbcDAO implements ProductDAO{
-    String url = "jdbc:h2:tcp://localhost:9088/project;IFEXISTS=TRUE";
+    String url = "jdbc:h2:tcp://localhost:9099/project;IFEXISTS=TRUE";
 
     public ProductJdbcDAO() {
     }
@@ -27,10 +27,11 @@ public class ProductJdbcDAO implements ProductDAO{
     public ProductJdbcDAO(String url){
      this.url=url;
     }
-
+    
+//LAB05: Example from Lecture09 39-41 
     @Override
     public Collection<Product> getProducts() {
-        String sql = "select * from products order by id";
+        String sql = "select * from product order by id";
         try (
             // get a connection to the database
             Connection dbCon = JdbcConnection.getConnection(url);
@@ -39,10 +40,11 @@ public class ProductJdbcDAO implements ProductDAO{
             ) {
                 // execute the query
                 ResultSet rs = stmt.executeQuery();
+                
                 // Create a collection for holding the product we get from the query.
                 // We are using a List in order to preserve the order in which
                 // the data was returned from the query.
-                Collection<Product> products = new ArrayList<>();
+                List<Product> products = new ArrayList<>();
                 // iterate through the query results
                 while (rs.next()) {
                 // get the data out of the query
@@ -52,6 +54,7 @@ public class ProductJdbcDAO implements ProductDAO{
                 String category = rs.getString("category");
                 Integer price = rs.getInt("price");
                 Integer quantity = rs.getInt("quantity");
+                
                 // use the data to create a student object
                  Product p = new Product(id, name, description, category, price, quantity);
                 // and put it in the collection
@@ -70,7 +73,9 @@ public class ProductJdbcDAO implements ProductDAO{
                 Connection connection = JdbcConnection.getConnection(url);
                 // To retrieve a unique sorted list of category in descending order:
                 PreparedStatement stmt
-                = connection.prepareStatement("select distinct category from productss order by category desc");
+                = connection.prepareStatement("select distinct category from product order by category desc");
+                
+
                 // execute the query
                 ResultSet rs = stmt.executeQuery();) {
    
@@ -78,28 +83,28 @@ public class ProductJdbcDAO implements ProductDAO{
                 // iterate through the query results
                 while (rs.next()) {
                     // get the data out of the query
-                    String category = rs.getString("category");
+                    String c = rs.getString("category");
                     // and put it in the collection
-                    categories.add(category);
+                    categories.add(c);
             }
                 return categories;
             } catch (SQLException ex) {
                  throw new RuntimeException(ex);
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void save(Product product) {
-         String sql = "insert into product(id,name,description,category,price,quantity)values(?,?,?,?,?,?)";
+        
+         String sql = "merge into product(id,name,description,category,price,quantity)values(?,?,?,?,?,?)";
          try (
         // get connection to database
         Connection dbCon = JdbcConnection.getConnection(url);
         // create the statement
         PreparedStatement stmt = dbCon.prepareStatement(sql);
         ) {
-            stmt.setInt(1, product.getProductID());
-            stmt.setString(2, product.getProductName());
+            stmt.setInt(1, product.getId());
+            stmt.setString(2, product.getName());
             stmt.setString(3, product.getDescription());
             stmt.setString(4, product.getCategory());
             stmt.setInt(5, product.getPrice());
@@ -107,8 +112,7 @@ public class ProductJdbcDAO implements ProductDAO{
             // execute the statement
             stmt.executeUpdate();
                 
-            } catch (SQLException ex) { // we are forced to catch SQLException
-            // don't let the SQLException leak from our DAO encapsulation
+            } catch (SQLException ex) { 
             throw new RuntimeException(ex);
             }
 
@@ -116,18 +120,17 @@ public class ProductJdbcDAO implements ProductDAO{
 
     @Override
     public void delete(Product selected) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Product findById(int id) {
+    public Product findById(int productID) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public Collection<Product> findByFilter(String category) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+     
 }

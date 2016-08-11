@@ -23,7 +23,7 @@ public class ProductStore implements ProductDAO {
     @Override
     public void save(Product product) {
 
-        allProducts.put(product.getProductID(), product);
+        allProducts.put(product.getId(), product);
 
         if (allCategories.containsKey(product.getCategory())) {
             allCategories.get(product.getCategory()).add(product);
@@ -48,8 +48,8 @@ public class ProductStore implements ProductDAO {
 
     //Project page5 Test Pass
     @Override
-    public Product findById(int id) {
-        return allProducts.get(id);
+    public Product findById(int productID) {
+        return allProducts.get(productID);
         
         /*if (allProducts.isEmpty()) {
             return null;
@@ -72,7 +72,7 @@ public class ProductStore implements ProductDAO {
 
     @Override
     public void delete(Product selected) {
-        allProducts.remove(selected.getProductID());
+        allProducts.remove(selected.getId());
 
     }
 

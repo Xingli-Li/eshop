@@ -14,7 +14,7 @@ import gui.Menu;
  * @author lixi3350
  */
 public class Main {
-
+//LAB06: creating an instance of JDBC DAo, pass it into constructor call
     private static ProductDAO dao = new ProductJdbcDAO();
     
     

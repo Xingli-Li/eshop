@@ -5,6 +5,8 @@
  */
 package domain;
 
+import java.util.Objects;
+
 /**
  *
  * @author lixi3350
@@ -87,6 +89,31 @@ public class Product implements  Comparable<Product>{
         Integer myID = this.getId();
         Integer thierID = o.id;
         return myID.compareTo(thierID);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Product other = (Product) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
     
 

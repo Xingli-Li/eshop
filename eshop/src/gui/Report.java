@@ -5,10 +5,9 @@
  */
 package gui;
 
-import dao.ProductStore;
+import dao.ProductDAO;
 import domain.Product;
 import gui.helpers.SimpleListModel;
-import java.util.Collection;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 
@@ -24,14 +23,15 @@ public class Report extends javax.swing.JDialog {
     
     SimpleListModel myProduct = new SimpleListModel();
     SimpleListModel myFilter = new SimpleListModel(); 
-    private ProductStore dao = new ProductStore();
+    //private ProductStore dao = new ProductStore();
+    private ProductDAO dao;
     private JList<Product> jListProduct = new JList<>();
-    //protected void updateItem() {}
     
-    public Report(java.awt.Frame parent, boolean modal) {
+    public Report(java.awt.Frame parent, boolean modal, ProductDAO dao) {
         super(parent, modal);
         initComponents();
         jScrollPane1.setViewportView(jListProduct);
+        this.dao=dao;
         
         //use SimpleListModel to get the dao data into the JList
         myProduct.updateItems(dao.getProducts());
@@ -179,7 +179,7 @@ public class Report extends javax.swing.JDialog {
     }//GEN-LAST:event_CloseActionPerformed
 
     private void DeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteActionPerformed
-        //LAB05 delete the selected product!!!!!! test pass  !!!!!!!
+        //LAB05 delete the selected product
         Product selected = (Product)jListProduct.getSelectedValue(); 
         
         //do nothing if user clicks delete without selecting a product
@@ -187,17 +187,20 @@ public class Report extends javax.swing.JDialog {
             System.out.println("Please select a product!");
             return ;
         }
-        
-        //add conforimation dialog
-        JOptionPane.showMessageDialog(this, "Are you sure you want to delete this product?", "Confirmation", JOptionPane.INFORMATION_MESSAGE);          
-        int result = JOptionPane.showConfirmDialog(this, "Product is deleted successfully");       
+        else {
+        //add conforimation dialog         
+        int result = JOptionPane.showConfirmDialog(this, "Are you sure to delete this product?");       
         //did  the user click the yes button?
         if (result == JOptionPane.YES_OPTION) {
-           dao.getProducts().remove(selected);
+           dao.delete(selected);
+           
+           myProduct.updateItems(dao.getProducts()); 
+           jListProduct.setModel(myProduct);
        //user clicked yes so perform the action
         }
+        }
         
-       myProduct.updateItems(dao.getProducts()); 
+       
 // TODO add your handling code here:
     }//GEN-LAST:event_DeleteActionPerformed
 
@@ -220,7 +223,7 @@ public class Report extends javax.swing.JDialog {
         }
         
         Product selected = (Product)jListProduct.getSelectedValue();
-                Editor editProduct = new Editor(this, true, selected);
+                Editor editProduct = new Editor(this, true, selected, dao);
                 editProduct.setLocationRelativeTo(this);
                 editProduct.setVisible(true);
                 myProduct.updateItems(dao.getProducts());
@@ -237,53 +240,11 @@ public class Report extends javax.swing.JDialog {
              myProduct.updateItems(dao.findByFilter((cmbFilter.getSelectedItem().toString())));   
               //String selectedCategory = cmbFilter.getSelectedItem().toString();
              //myFilter.updateItems(dao.findByFilter(selectedCategory));
-         }
-        
-        
+         }     
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbFilterActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Report.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Report.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Report.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Report.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Report dialog = new Report(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Close;

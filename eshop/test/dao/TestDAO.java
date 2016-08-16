@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  */
 public class TestDAO {
     
-    private ProductDAO  dao = new ProductJdbcDAO();
+    private static ProductDAO  dao = new ProductJdbcDAO();
     // rst test product
     private Product prodOne;
     // second test product
@@ -52,22 +52,23 @@ public class TestDAO {
         dao.delete(prodOne);
         dao.delete(prodTwo);
     }
-
+    
+@Test
     public void testDaoSaveAndDelete() {
-// create product for testing
-Product savedProd = new Product(3, "name", "desc", "cat", 1, 2);
-// save the product using DAO
-dao.save(savedProd);
-// retrieve the same product via DAO
-Product retrieved = dao.findById(3);
-// ensure that the product we saved is the one we got back
-assertEquals("Retrieved product should be the same as the saved one",savedProd, retrieved);
-// delete the product via the DAO
-dao.delete(savedProd);
-// try to retrieve the deleted product
-retrieved = dao.findById(3);
-// ensure that the student was not retrieved (should be null)
-assertNull("Product should no longer exist", retrieved);
+    // create product for testing
+    Product savedProd = new Product(3, "name", "desc", "cat", 1, 2);
+    // save the product using DAO
+    dao.save(savedProd);
+    // retrieve the same product via DAO
+    Product retrieved = dao.findById(3);
+    // ensure that the product we saved is the one we got back
+    assertEquals("Retrieved product should be the same as the saved one",savedProd, retrieved);
+    // delete the product via the DAO
+    dao.delete(savedProd);
+    // try to retrieve the deleted product
+    retrieved = dao.findById(3);
+    // ensure that the student was not retrieved (should be null)
+    assertNull("Product should no longer exist", retrieved);
 }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

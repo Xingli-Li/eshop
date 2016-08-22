@@ -6,6 +6,7 @@
 package dao;
 
 import domain.Product;
+import java.util.Arrays;
 import java.util.Collection;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,20 +14,24 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
  *
  * @author lixi3350
  */
+@RunWith(Parameterized.class)
 public class TestDAO {
     
-    private final  ProductDAO dao = new ProductJdbcDAO("jdbc:h2:tcp://localhost:9099/project-testing");
+    private final  ProductDAO dao;// = new ProductJdbcDAO("jdbc:h2:tcp://localhost:9099/project-testing");
     // rst test product
     private Product prodOne;
     // second test product
     private Product prodTwo;
     
-    public TestDAO() {
+    public TestDAO(ProductDAO dao) {
+        this.dao=dao;
     }
     
     @BeforeClass
@@ -118,7 +123,14 @@ public class TestDAO {
     // ensure that the result is null
     assertNull("Product doesn't exist", retrieved);
 }
-    
+
+@Parameterized.Parameters
+public static Collection<?> daoObjectsToTest() {
+    return Arrays.asList(new Object[][]{
+        {new ProductStore()},
+        {new ProductJdbcDAO("jdbc:h2:tcp://localhost:9099/project-testing;IFEXISTS=TRUE")}
+});
+}
     
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

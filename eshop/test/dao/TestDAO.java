@@ -6,6 +6,7 @@
 package dao;
 
 import domain.Product;
+import java.util.Collection;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -19,7 +20,7 @@ import static org.junit.Assert.*;
  */
 public class TestDAO {
     
-    private static ProductDAO  dao = new ProductJdbcDAO();
+    private ProductDAO  dao = new ProductJdbcDAO();
     // rst test product
     private Product prodOne;
     // second test product
@@ -39,9 +40,9 @@ public class TestDAO {
     @Before
     public void setUp() {
     // first test product
-    this.prodOne = new Product(1, "name1", "cat1", "desc1", 11, 22);
+    this.prodOne = new Product(1, "name1", "desc1", "cat1", 11, 22);
     // second test product
-    this.prodTwo = new Product(2, "name2", "cat2", "desc2", 33, 44);
+    this.prodTwo = new Product(2, "name2", "desc2", "cat2", 33, 44);
     // save the products
     dao.save(prodOne);
     dao.save(prodTwo);
@@ -70,6 +71,31 @@ public class TestDAO {
     // ensure that the student was not retrieved (should be null)
     assertNull("Product should no longer exist", retrieved);
 }
+    
+@Test
+    public void testDaoGetAll() {
+    // call getAll
+    Collection<Product> products = dao.getProducts();
+    // ensure the result includes the test products
+    assertTrue("prodOne should exist", products.contains(prodOne));
+    assertTrue("prodTwo should exist", products.contains(prodTwo));
+    // ensure the result ONLY includes the test products
+    assertEquals("Only 2 products in result", 2, products.size());
+    // nd prodOne − result is generic collection, so we have to sequentially search for it
+    for (Product p : products) {
+    if (p.equals(prodOne)) {
+    // ensure that all of the details were correctly retrieved
+    assertEquals(prodOne.getId(), p.getId());
+    assertEquals(prodOne.getName(), p.getName());
+    assertEquals(prodOne.getDescription(), p.getDescription());
+    assertEquals(prodOne.getCategory(), p.getCategory());
+    assertEquals(prodOne.getPrice(), p.getPrice());
+    assertEquals(prodOne.getQuantity(), p.getQuantity());   
+  }
+ }
+}
+    
+    
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //

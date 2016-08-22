@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  */
 public class TestDAO {
     
-    private final  ProductDAO dao = new ProductJdbcDAO();
+    private final  ProductDAO dao = new ProductJdbcDAO("jdbc:h2:tcp://localhost:9099/project-testing");
     // rst test product
     private Product prodOne;
     // second test product

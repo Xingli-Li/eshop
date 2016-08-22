@@ -21,4 +21,5 @@ public interface ProductDAO {
     
     Product findById (int productID);
     Collection<Product> findByFilter (String category);
+
 }

@@ -20,7 +20,7 @@ import static org.junit.Assert.*;
  */
 public class TestDAO {
     
-    private ProductDAO  dao = new ProductJdbcDAO();
+    private final  ProductDAO dao = new ProductJdbcDAO();
     // rst test product
     private Product prodOne;
     // second test product
@@ -93,6 +93,30 @@ public class TestDAO {
     assertEquals(prodOne.getQuantity(), p.getQuantity());   
   }
  }
+}
+    
+@Test
+    public void testDaoFindById() {
+    // get prodOne using findById method
+    Product retrieved = dao.findById(1);
+    // ensure that you got back prodOne, and not another product
+    assertEquals("Retrieved product should be the same as the saved one",prodOne, retrieved);
+    // ensure that prodOne's details were properly retrieved
+    Collection<Product> products = dao.getProducts();
+    for (Product p : products) {
+    if (p.equals(prodOne)) {
+    assertEquals(prodOne.getId(), p.getId());
+    assertEquals(prodOne.getName(), p.getName());
+    assertEquals(prodOne.getDescription(), p.getDescription());
+    assertEquals(prodOne.getCategory(), p.getCategory());
+    assertEquals(prodOne.getPrice(), p.getPrice());
+    assertEquals(prodOne.getQuantity(), p.getQuantity());   
+  }
+    }
+    // call findById using a non−existent ID
+     retrieved = dao.findById(5);
+    // ensure that the result is null
+    assertNull("Product doesn't exist", retrieved);
 }
     
     

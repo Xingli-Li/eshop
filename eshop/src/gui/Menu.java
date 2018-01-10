@@ -5,6 +5,8 @@
  */
 package gui;
 
+import dao.ProductDAO;
+
 /**
  *
  * @author lixi3350
@@ -14,8 +16,13 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    public Menu() {
+    
+    private ProductDAO dao;
+    
+    public Menu(ProductDAO dao) {
         initComponents();
+        this.dao=dao;
+        
     }
 
     /**
@@ -93,23 +100,23 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
-// create the dialog instance
-Editor dialog = new Editor(this, true);
+    // create the dialog instance
+    Editor dialog = new Editor(this, true,dao);
 
-dialog.setLocationRelativeTo(this);
+    dialog.setLocationRelativeTo(this);
 
-dialog.setVisible(true);
+    dialog.setVisible(true);
 
 // TODO add your handling code here:
     }//GEN-LAST:event_AddActionPerformed
 
     private void ViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewActionPerformed
-// create the dialog instance
-Report view = new Report(this, true);
+    // create the dialog instance
+    Report view = new Report(this, true, dao);
 
-view.setLocationRelativeTo(this);
+    view.setLocationRelativeTo(this);
 
-view.setVisible(true);       
+    view.setVisible(true);       
 
 // TODO add your handling code here:
     }//GEN-LAST:event_ViewActionPerformed
@@ -119,41 +126,7 @@ view.setVisible(true);
 
 // TODO add your handling code here:
     }//GEN-LAST:event_ExitActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Menu().setVisible(true);
-            }
-        });
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Add;

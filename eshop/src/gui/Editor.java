@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 public class Editor extends javax.swing.JDialog {
  private Product product = new Product();
  //private ProductStore dao = new ProductStore();
- private static ProductDAO dao;
+ private ProductDAO dao;
  SimpleListModel myCategory = new SimpleListModel();
  
     /**
@@ -27,7 +27,7 @@ public class Editor extends javax.swing.JDialog {
         super.setModal(modal);
         initComponents();
         cmbCategory.setEditable(true);
-        Editor.dao = dao;
+        this.dao = dao;
         
         //LAB03 use SimpleListModel to get the dao data into the combo-box
         myCategory.updateItems(dao.getCategories());
